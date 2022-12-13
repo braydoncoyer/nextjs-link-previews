@@ -14,39 +14,15 @@ export default function CustomLink({ children, href }: Props) {
   let inImagePreview = false;
   let inLink = false;
 
-  const origin =
-    typeof window !== "undefined" && window.location.origin
-      ? window.location.origin
-      : "";
+  let handleMouseEnterImage = () => {};
 
-  let handleMouseEnterImage = () => {
-    inImagePreview = true;
-    setIsHovering(true);
-  };
+  let handleMouseLeaveImage = () => {};
 
-  let handleMouseLeaveImage = () => {
-    inImagePreview = false;
-    setIsHovering(inLink);
-  };
+  let handleMouseEnterLink = () => {};
 
-  let handleMouseEnterLink = () => {
-    inLink = true;
-    setIsHovering(true);
-  };
+  let handleMouseLeaveLink = () => {};
 
-  let handleMouseLeaveLink = () => {
-    inLink = false;
-    setIsHovering(inImagePreview);
-  };
-
-  let handleFetchImage = useCallback(
-    async (url: string) => {
-      const res = await fetch(`${origin}/api/link-preview?url=${url}`);
-      const data = await res.json();
-      setImagePreview(data.image);
-    },
-    [origin]
-  );
+  let handleFetchImage = useCallback(async (url: string) => {}, []);
 
   React.useEffect(() => {
     handleFetchImage(href);
@@ -57,6 +33,7 @@ export default function CustomLink({ children, href }: Props) {
   return (
     <span>
       <span className="relative z-10 hidden md:inline-block">
+        {/* Link itself */}
         <Link
           href={href}
           className={`${isHovering && "underline"}`}
@@ -67,6 +44,8 @@ export default function CustomLink({ children, href }: Props) {
         >
           {children}
         </Link>
+
+        {/* Image Preview */}
         {isHovering && (
           <Link href={href} passHref>
             <span
@@ -92,6 +71,8 @@ export default function CustomLink({ children, href }: Props) {
           </Link>
         )}
       </span>
+
+      {/* For mobile devices */}
       <a
         href={href}
         className={`${isHovering && "underline"} md:hidden`}

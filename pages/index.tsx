@@ -44,6 +44,9 @@ export default function Home() {
         </p>
 
         <a href="https://jeffsum.com/">Get more with Jeffsum!</a>
+        {/* <CustomLink href="https://jeffsum.com/">
+          Get more with Jeffsum!
+        </CustomLink> */}
       </main>
     </div>
   );
